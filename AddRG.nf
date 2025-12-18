@@ -1,0 +1,39 @@
+params.container = 'broadinstitute/gatk'
+process ADD_RG {
+  tag { pair_id_val }
+  container params.container
+  input:
+    tuple val(pair_id_val), path(bam)
+    val  rglb
+    val  rgpl
+  output:
+    tuple val(pair_id_val), path("${pair_id_val}.rg.bam"), emit: rg_bam
+  script:
+    def rgid = pair_id_val
+    def rgpu = "${pair_id_val}.PU"
+    def rgsm = pair_id_val
+    """
+  gatk AddOrReplaceReadGroups \
+      -I "${bam}" \
+      -O "${pair_id_val}.rg.bam" \
+      -RGID "${rgid}" \
+      -RGLB "${rglb}" \
+      -RGPL "${rgpl}" \
+      -RGPU "${rgpu}" \
+      -RGSM "${rgsm}"
+  """
+}
+
+process INDEX_RG_BAM {
+    tag { pair_id_val }
+    container params.container
+    input:
+        tuple val(pair_id_val), path(bam)
+    output:
+        tuple val(pair_id_val), path("${pair_id_val}.rg.bai"), emit: rg_bai
+    script:
+        """
+        gatk BuildBamIndex -I "${pair_id_val}.rg.bam"
+        """
+}
+

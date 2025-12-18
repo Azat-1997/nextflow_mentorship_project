@@ -1,7 +1,5 @@
-genome_file = Channel.fromPath("./genomes/mm9.fasta")
 process BWA {
     container 'staphb/bwa'
-    publishDir "${params.outdir}/BWA"
     input:
     path genome_file
     output:
@@ -20,7 +18,6 @@ process BWA {
 
 process FAIDX {
     container 'broadinstitute/gatk'
-    publishDir "${params.outdir}/BWA"
     input: 
     path genome_file
     output:
@@ -33,20 +30,19 @@ process FAIDX {
 
  process PICARD {
     container 'community.wave.seqera.io/library/picard:3.4.0--e9963040df0a9bf6'
-    publishDir "${params.outdir}/PICARD", mode: 'copy'
     input: 
     path genome_file
     output:
-    path "${genome_file}.dict", emit: dict
+    path "${genome_file.baseName}.dict", emit: dict
     script:  
     """
     picard CreateSequenceDictionary \
     R=${genome_file} \
-    O=${genome_file}.dict
+    O=${genome_file.baseName}.dict
     """
-} 
+}
+
 workflow {
-    BWA(genome_file);
-    FAIDX(genome_file);
-    PICARD(genome_file).dict.view();
+    genome = Channel.fromPath('genomes/resources_broad_hg38_v0_Homo_sapiens_assembly38.fasta')
+    PICARD(genome).dict.view()
 }
