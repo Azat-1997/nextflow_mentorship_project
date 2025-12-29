@@ -13,7 +13,7 @@ process VARIANTCALLING {
     tuple val(pair_id_val), path(bam_file)
     tuple val(pair_id_val), path(bam_index) 
     output:
-    tuple path("${pair_id_val}.g.vcf.gz"), path("${pair_id_val}.g.vcf.gz.tbi"), emit: vcf
+    tuple val(pair_id_val), path("${pair_id_val}.g.vcf.gz"), path("${pair_id_val}.g.vcf.gz.tbi"), emit: vcf
     script:
     """gatk --java-options "-Xmx4g" HaplotypeCaller  \
    -R ${genome} \

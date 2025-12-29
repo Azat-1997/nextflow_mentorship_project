@@ -1,22 +1,14 @@
-gvcf_file = Channel.fromPath('Haplotyper/Test-ready.g.vcf.gz')
-gvcf_index = Channel.fromPath('Haplotyper/Test-ready.g.vcf.gz.tbi')
-params.output_dir = 'output_dir'
+params.container = 'broadinstitute/gatk' 
 process DBIMPORT {
-    container 'broadinstitute/gatk'
-    publishDir 'DBImport'
+    container params.container
+    tag { pair_id_val }
     input:
-    path gvcf_file
-    path gvcf_index 
+    tuple val(pair_id_val), path(gvcf_file), path(gvcf_index) 
     output:
-    path params.output_dir
+    path pair_id_val, emit: database
     script:
     """gatk --java-options "-Xmx4g -Xms4g" GenomicsDBImport \
       -V ${gvcf_file} \
-      --genomicsdb-workspace-path ${params.output_dir} \
+      --genomicsdb-workspace-path ${pair_id_val} \
       --intervals chrM"""
-}
-
-workflow {
-    DBIMPORT(gvcf_file, gvcf_index);
- 
 }

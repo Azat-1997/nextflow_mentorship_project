@@ -33,7 +33,7 @@ process INDEX_RG_BAM {
         tuple val(pair_id_val), path("${pair_id_val}.rg.bai"), emit: rg_bai
     script:
         """
-        gatk BuildBamIndex -I "${pair_id_val}.rg.bam"
+        samtools index ${bam} ${pair_id_val}.rg.bai
         """
 }
 
