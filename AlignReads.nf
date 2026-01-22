@@ -8,7 +8,8 @@ process ALIGN {
     tag { pair_id_val }
     input:
     tuple val(pair_id_val), path(read1), path(read2)
-    tuple path(genome), path(amb), path(ann), path(bwt), path(pac), path(sa)
+    path(genome)
+    tuple path(amb), path(ann), path(bwt), path(pac), path(sa)
     path fai
     path dict 
     output:

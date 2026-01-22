@@ -8,6 +8,7 @@ include { VARIANTCALLING } from './VariantCalling.nf'
 include { ADD_RG } from './AddRG.nf'
 include { INDEX_RG_BAM } from './AddRG.nf'
 include { DBIMPORT } from './DBImport.nf'
+include { GENOTYPE } from './GenotypeGVCFs.nf'
 // Define input parameters
 
 params.reads = "./reads/*_{1,2}.filt.fastq.gz"  // Input folder containing read files
@@ -19,17 +20,15 @@ workflow {
     genome_index =  BWA(params.ref_genome).bwa_index.collect()
     genome_faidx = FAIDX(params.ref_genome).faidx.collect()
     genome_dict = PICARD(params.ref_genome).dict.collect()
-    genome_dict.view()
-    aligned_reads = ALIGN(reads, genome_index, genome_faidx, genome_dict).sam
+    aligned_reads = ALIGN(reads, params.ref_genome, genome_index, genome_faidx, genome_dict).sam
     bam = CONVERT2SORTED_BAM(aligned_reads).bam
     def rglb = params.rglb ?: 'lib1'
     def rgpl = params.rgpl ?: 'ILLUMINA'
     rg_bam = ADD_RG(bam, rglb, rgpl).rg_bam
     //rg_bai = INDEX_BAM(rg_bam).bai
     rg_bai = INDEX_RG_BAM(rg_bam).rg_bai
-    rg_bai.view()
     vcf = VARIANTCALLING(params.ref_genome, genome_faidx, genome_dict, rg_bam, rg_bai).vcf
-    vcf.view()
     database = DBIMPORT(vcf).database
-    database.view()
+    params.ref_genome.view()
+    GENOTYPE(vcf, params.ref_genome, genome_faidx, genome_dict).genotype_gvcf.view()
 }
