@@ -1,5 +1,4 @@
 process BWA {
-    container 'staphb/bwa'
     input:
     path genome_file
     output:
@@ -12,11 +11,9 @@ process BWA {
     """
     bwa index ${genome_file}
     """
-    
 }
 
 process FAIDX {
-    container 'broadinstitute/gatk'
     input: 
     path genome_file
     output:
@@ -28,7 +25,6 @@ process FAIDX {
 }
 
  process PICARD {
-    container 'community.wave.seqera.io/library/picard:3.4.0--e9963040df0a9bf6'
     input: 
     path genome_file
     output:
@@ -39,9 +35,4 @@ process FAIDX {
     R=${genome_file} \
     O=${genome_file.baseName}.dict
     """
-}
-
-workflow {
-    genome = Channel.fromPath('genomes/resources_broad_hg38_v0_Homo_sapiens_assembly38.fasta')
-    PICARD(genome).dict.view()
 }

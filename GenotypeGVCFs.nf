@@ -1,6 +1,4 @@
-params.container = 'broadinstitute/gatk'
 process GENOTYPE {
-    container params.container
     tag { pair_id_val }
     input:
     tuple val(pair_id_val), path(gvcf_file), path(gvcf_index)

@@ -1,8 +1,4 @@
-params.container = "broadinstitute/gatk"
-params.task_cpus = 2
-
 process CONVERT2SORTED_BAM {
-    container params.container
     tag { pair_id_val }
     input:
     tuple val(pair_id_val), path(sam)
@@ -16,7 +12,6 @@ process CONVERT2SORTED_BAM {
 }
 
 process INDEX_BAM {
-    container params.container
     tag { pair_id_val }
     input:
     tuple val(pair_id_val), path(bam)

@@ -1,7 +1,5 @@
-params.container = 'broadinstitute/gatk'
 process ADD_RG {
   tag { pair_id_val }
-  container params.container
   input:
     tuple val(pair_id_val), path(bam)
     val  rglb
@@ -26,7 +24,6 @@ process ADD_RG {
 
 process INDEX_RG_BAM {
     tag { pair_id_val }
-    container params.container
     input:
         tuple val(pair_id_val), path(bam)
     output:
