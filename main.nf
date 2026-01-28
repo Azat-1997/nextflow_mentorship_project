@@ -1,18 +1,18 @@
-include { BWA } from './Indexing.nf'
-include { FAIDX } from './Indexing.nf'
-include { PICARD } from './Indexing.nf'
-include { ALIGN } from './AlignReads.nf'
-include { CONVERT2SORTED_BAM } from './Samtools.nf'
-include { INDEX_BAM } from './Samtools.nf'
-include { VARIANTCALLING } from './VariantCalling.nf'
-include { ADD_RG } from './AddRG.nf'
-include { INDEX_RG_BAM } from './AddRG.nf'
-include { DBIMPORT } from './DBImport.nf'
-include { GENOTYPE } from './GenotypeGVCFs.nf'
+include { BWA } from './modules/Indexing/Bwa.nf'
+include { FAIDX } from './modules/Indexing/Faidx.nf'
+include { PICARD } from './modules/Indexing/Picard.nf'
+include { ALIGN } from './modules/Align/AlignReads.nf'
+include { CONVERT2SORTED_BAM } from './modules/Samtools/Convert2SortedBam.nf'
+include { INDEX_BAM } from './modules/Samtools/IndexBam.nf'
+include { ADD_RG } from './modules/RG/AddRG.nf'
+include { INDEX_RG_BAM } from './modules/RG/IndexRGBam.nf'
+include { VARIANTCALLING } from './modules/GATK/VariantCalling.nf'
+include { DBIMPORT } from './modules/GATK/DBImport.nf'
+include { GENOTYPE } from './modules/GATK/GenotypeGVCFs.nf'
 // Define input parameters
 
-params.reads = "./reads/*_{1,2}.filt.fastq.gz"  // Input folder containing read files
-params.ref_genome = Channel.fromPath('./genomes/mm9.fasta')
+params.reads = "/reads/*_{1,2}.filt.fastq.gz"  // Input folder containing read files
+params.ref_genome = Channel.fromPath('/genomes/mm9.fasta')
 
 // Define the workflow
 workflow {
