@@ -22,8 +22,8 @@ workflow {
     genome_dict = PICARD(params.ref_genome).dict.collect()
     aligned_reads = ALIGN(reads, params.ref_genome, genome_index, genome_faidx, genome_dict).sam
     bam = CONVERT2SORTED_BAM(aligned_reads).bam
-    def rglb = params.rglb ?: 'lib1'
-    def rgpl = params.rgpl ?: 'ILLUMINA'
+    def rglb = params.rglb ?: 'lib1' // Delete after PREPROCESS implementation
+    def rgpl = params.rgpl ?: 'ILLUMINA' // Delete after PREPROCESS implementation
     rg_bam = ADD_RG(bam, rglb, rgpl).rg_bam
     //rg_bai = INDEX_BAM(rg_bam).bai
     rg_bai = INDEX_RG_BAM(rg_bam).rg_bai
