@@ -4,10 +4,9 @@ process VARIANTCALLING {
     path genome  
     path index 
     path dict 
-    tuple val(pair_id_val), path(bam_file)
-    tuple val(pair_id_val), path(bam_index) 
+    tuple val(pair_id_val), path(bam_index), path(bam_file) 
     output:
-    tuple val(pair_id_val), path("${pair_id_val}.g.vcf.gz"), path("${pair_id_val}.g.vcf.gz.tbi"), emit: vcf
+    tuple val(pair_id_val), path("${pair_id_val}.g.vcf.gz.tbi"), path("${pair_id_val}.g.vcf.gz"), emit: vcf
     script:
     """gatk --java-options "-Xmx4g" HaplotypeCaller  \
    -R ${genome} \

@@ -1,4 +1,5 @@
 process BWA {
+    publishDir 'Indexes'
     input:
     path genome_file
     output:

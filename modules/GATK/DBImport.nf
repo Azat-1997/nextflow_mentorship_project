@@ -1,7 +1,7 @@
 process DBIMPORT {
     tag { pair_id_val }
     input:
-    tuple val(pair_id_val), path(gvcf_file), path(gvcf_index) 
+    tuple val(pair_id_val), path(gvcf_index), path(gvcf_file) 
     output:
     path pair_id_val, emit: database
     script:

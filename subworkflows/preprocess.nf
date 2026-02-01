@@ -28,14 +28,12 @@ workflow PREPROCESS {
     INDEX_RG_BAM(ADD_RG.out.rg_bam)
 
     // prepare output
-    bam = ADD_RG.out.rg_bam
-    bai = INDEX_RG_BAM.out.rg_bai
+    bam_pair = INDEX_RG_BAM.out.rg_bam_pair
     faidx = FAIDX.out.faidx
     dict = PICARD.out.dict
 
     emit:
-        bam
-        bai
+        bam_pair
         faidx
         dict
 

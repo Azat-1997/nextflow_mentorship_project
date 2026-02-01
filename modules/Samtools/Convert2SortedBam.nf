@@ -6,7 +6,7 @@ process CONVERT2SORTED_BAM {
     tuple val(pair_id_val), path("${pair_id_val}.sorted.bam"), emit: bam
     script:
     """
-    samtools view -@ ${params.task_cpus} -bS ${sam} \
-        | samtools sort -@ ${params.task_cpus} -o ${pair_id_val}.sorted.bam
+    samtools view -@ ${task.cpus} -bS ${sam} \
+        | samtools sort -@ ${task.cpus} -o ${pair_id_val}.sorted.bam
     """
 }
