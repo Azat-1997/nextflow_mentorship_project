@@ -1,6 +1,6 @@
-include { VARIANTCALLING } from '../modules/GATK/VariantCalling.nf'
-include { DBIMPORT } from '../modules/GATK/DBImport.nf'
-include { GENOTYPE } from '../modules/GATK/GenotypeGVCFs.nf'
+include { VARIANTCALLING } from '../../../modules/GATK/VariantCalling/main.nf'
+include { DBIMPORT } from '../../../modules/GATK/DBImport/main.nf'
+include { GENOTYPE } from '../../../modules/GATK/GenotypeGVCFs/main.nf'
 
 workflow GATK {
     take:

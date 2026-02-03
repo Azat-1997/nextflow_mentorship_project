@@ -1,5 +1,5 @@
-include { PREPROCESS } from './subworkflows/preprocess.nf'
-include { GATK } from './subworkflows/gatk.nf'
+include { PREPROCESS } from './subworkflows/local/preprocess/main.nf'
+include { GATK } from './subworkflows/local/gatk/main.nf'
 
 workflow {
 // Input folder containing read files
