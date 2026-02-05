@@ -3,7 +3,6 @@ include { FAIDX } from '../../../modules/Indexing/Faidx/main.nf'
 include { PICARD } from '../../../modules/Indexing/Picard/main.nf'
 include { ALIGN } from '../../../modules/Align/main.nf'
 include { CONVERT2SORTED_BAM } from '../../../modules/Samtools/Convert2SortedBam/main.nf'
-include { INDEX_BAM } from '../../../modules/Samtools/IndexBam/main.nf'
 include { ADD_RG } from '../../../modules/RG/AddRG/main.nf'
 include { INDEX_RG_BAM } from '../../../modules/RG/IndexRGBam/main.nf'
 
