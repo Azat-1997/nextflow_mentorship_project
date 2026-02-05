@@ -10,14 +10,14 @@ if (params.reads) {
         bam_pair = PREPROCESS.out.bam_pair
         faidx = PREPROCESS.out.faidx
         dict = PREPROCESS.out.dict
-        GATK(params.ref_genome, faidx, dict, bam_pair).raw_vcf.view({"RAW VCF: ${it}"})
+        GATK(params.ref_genome, faidx, dict, bam_pair).genotype_vcf.view({"GENOTYPE VCF: ${it}"})
     } else if (params.bam && params.faidx && params.dict) {
         println "Looking for aligned data and indexes"
         bam_pair = Channel.fromFilePairs(params.bam, flat: true)
         faidx = Channel.fromPath(params.faidx).first()
         dict = Channel.fromPath(params.dict).first()
         // faidx and dict should be value channels!!
-        GATK(params.ref_genome, faidx, dict, bam_pair).raw_vcf.view({"RAW VCF: ${it}"})
+        GATK(params.ref_genome, faidx, dict, bam_pair).genotype_vcf.view({"GENOTYPE VCF: ${it}"})
     } else {
         println "Data are absence: specify Reads or Bam files"
     }

@@ -10,10 +10,10 @@ workflow GATK {
     bam_pair
 
     main: 
-    VARIANTCALLING(ref_genome, faidx, dict, bam_pair)
-    DBIMPORT(VARIANTCALLING.out.vcf)
-    raw_vcf = GENOTYPE(ref_genome, faidx, dict, VARIANTCALLING.out.vcf)
+    vcf = VARIANTCALLING(ref_genome, faidx, dict, bam_pair).vcf
+    DBIMPORT(vcf)
+    genotype_vcf = GENOTYPE(ref_genome, faidx, dict, vcf)
 
     emit:
-    raw_vcf
+    genotype_vcf
 }

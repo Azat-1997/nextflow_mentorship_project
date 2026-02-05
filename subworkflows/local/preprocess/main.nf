@@ -13,24 +13,21 @@ workflow PREPROCESS {
     reads
     main:
     // make indexes for alignment and GATK
-    BWA(ref_genome)
-    FAIDX(ref_genome)
-    PICARD(ref_genome)
+    bwa = BWA(ref_genome)
+    faidx = FAIDX(ref_genome).faidx
+    dict = PICARD(ref_genome).dict
     
     // make alignment 
-    ALIGN(reads, ref_genome, BWA.out.bwa_index, FAIDX.out.faidx, PICARD.out.dict)
-    CONVERT2SORTED_BAM(ALIGN.out.sam)
+    sam  = ALIGN(reads, ref_genome, bwa, faidx, dict).sam
+    bam  = CONVERT2SORTED_BAM(sam)
 
     // add group for proper work of GATK
     def rglb = params.rglb ?: 'lib1'
     def rgpl = params.rgpl ?: 'ILLUMINA'
-    ADD_RG(CONVERT2SORTED_BAM.out.bam, rglb, rgpl)
-    INDEX_RG_BAM(ADD_RG.out.rg_bam)
+    rg_bam = ADD_RG(bam, rglb, rgpl).rg_bam
 
     // prepare output
-    bam_pair = INDEX_RG_BAM.out.rg_bam_pair
-    faidx = FAIDX.out.faidx
-    dict = PICARD.out.dict
+    bam_pair = INDEX_RG_BAM(rg_bam).rg_bam_pair
 
     emit:
         bam_pair
