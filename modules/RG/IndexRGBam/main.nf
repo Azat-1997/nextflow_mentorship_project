@@ -1,5 +1,6 @@
 process INDEX_RG_BAM {
     tag { pair_id_val }
+    container 'broadinstitute/gatk'
     input:
         tuple val(pair_id_val), path(bam)
     output:

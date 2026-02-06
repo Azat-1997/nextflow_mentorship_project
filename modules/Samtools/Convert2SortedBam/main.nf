@@ -1,5 +1,6 @@
 process CONVERT2SORTED_BAM {
     tag { pair_id_val }
+    container 'broadinstitute/gatk'
     input:
     tuple val(pair_id_val), path(sam)
     output:

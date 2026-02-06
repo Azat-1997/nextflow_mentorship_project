@@ -1,5 +1,6 @@
 process DBIMPORT {
     tag { pair_id_val }
+    container 'broadinstitute/gatk'
     input:
     tuple val(pair_id_val), path(gvcf_index), path(gvcf_file) 
     output:

@@ -1,5 +1,6 @@
 process ADD_RG {
   tag { pair_id_val }
+  container 'broadinstitute/gatk'
   input:
     tuple val(pair_id_val), path(bam)
     val  rglb

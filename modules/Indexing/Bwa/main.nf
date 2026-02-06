@@ -1,5 +1,5 @@
 process BWA {
-    publishDir 'Indexes'
+    container 'staphb/bwa'
     input:
     path genome_file
     output:

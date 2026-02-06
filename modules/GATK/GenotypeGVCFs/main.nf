@@ -1,5 +1,6 @@
 process GENOTYPE {
     tag { pair_id_val }
+    container 'broadinstitute/gatk'
     input:
     path genome
     path index

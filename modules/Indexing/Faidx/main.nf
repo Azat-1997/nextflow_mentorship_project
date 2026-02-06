@@ -1,4 +1,5 @@
 process FAIDX {
+    container 'broadinstitute/gatk'
     input: 
     path genome_file
     output:
