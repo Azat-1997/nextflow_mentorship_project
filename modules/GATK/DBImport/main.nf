@@ -1,13 +1,13 @@
 process DBIMPORT {
-    tag { pair_id_val }
+    tag { meta.id }
     container 'broadinstitute/gatk'
     input:
-    tuple val(pair_id_val), path(gvcf_index), path(gvcf_file) 
+    tuple val(meta), path(gvcf_index), path(gvcf_file) 
     output:
-    path pair_id_val, emit: database
+    tuple val(meta), path("${meta.id}"), emit: database
     script:
     """gatk --java-options "-Xmx4g -Xms4g" GenomicsDBImport \
       -V ${gvcf_file} \
-      --genomicsdb-workspace-path ${pair_id_val} \
+      --genomicsdb-workspace-path ${meta.id} \
       --intervals chrM"""
 }

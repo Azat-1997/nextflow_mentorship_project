@@ -12,14 +12,9 @@ workflow PREPROCESS {
     reads
     main:
     // make indexes for alignment and GATK
-    genome_path = new File(ref_genome)
-    ref_genome_ch = tuple(genome_path.baseName, ref_genome)  
-    bwa_index = BWA_INDEX(ref_genome_ch).bwa_index
-    bwa_index.view()
-    faidx = FAIDX(ref_genome_ch).faidx
-    faidx.view()
-    dict = PICARD(ref_genome_ch).dict
-    dict.view()
+    bwa_index = BWA_INDEX(ref_genome).bwa_index
+    faidx = FAIDX(ref_genome).faidx
+    dict = PICARD(ref_genome).dict
     
     // make alignment 
     sam  = BWA_ALIGN(reads, ref_genome, bwa_index).sam

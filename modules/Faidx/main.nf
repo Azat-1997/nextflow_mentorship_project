@@ -1,4 +1,5 @@
 process FAIDX {
+    tag { meta.id }
     container 'broadinstitute/gatk'
     input: 
     tuple val(meta), path(genome_file)

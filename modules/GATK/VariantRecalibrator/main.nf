@@ -8,7 +8,6 @@ gvcf_train_index = Channel.fromPath('1000G_omni2.5.hg38.sites.vcf.gz.tbi')
 gvcf_train_set2 = Channel.fromPath('resources_broad_hg38_v0_1000G_phase1.snps.high_confidence.hg38.vcf.gz')
 gvcf_train_index2 = Channel.fromPath('resources_broad_hg38_v0_1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi')
 
-params.output_file_name = 'output'
 process RECALIBRATION {
     container 'broadinstitute/gatk'
     publishDir 'VariantRecalibration'
@@ -36,11 +35,4 @@ process RECALIBRATION {
    -mode SNP \
    -O ${params.output_file_name}.recal \
    --tranches-file ${params.output_file_name}.tranches """
-}
-
-workflow {
-    RECALIBRATION(gvcf_file, gvcf_index, gvcf_train_set, gvcf_train_index,
-     gvcf_train_set2, gvcf_train_index2,
-     genome_file, genome_index, genome_dict);
- 
 }

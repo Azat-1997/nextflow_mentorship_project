@@ -1,4 +1,5 @@
 process BWA_INDEX {
+    tag { meta.id }
     container 'staphb/bwa'
     input:
     tuple val(meta), path(genome_file)

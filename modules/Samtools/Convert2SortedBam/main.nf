@@ -1,13 +1,13 @@
 process CONVERT2SORTED_BAM {
-    tag { pair_id_val }
+    tag { meta.id }
     container 'broadinstitute/gatk'
     input:
-    tuple val(pair_id_val), path(sam)
+    tuple val(meta), path(sam)
     output:
-    tuple val(pair_id_val), path("${pair_id_val}.sorted.bam"), emit: bam
+    tuple val(meta), path("${meta.id}.sorted.bam"), emit: bam
     script:
     """
     samtools view -@ ${task.cpus} -bS ${sam} \
-        | samtools sort -@ ${task.cpus} -o ${pair_id_val}.sorted.bam
+        | samtools sort -@ ${task.cpus} -o ${meta.id}.sorted.bam
     """
 }
