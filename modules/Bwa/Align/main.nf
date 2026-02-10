@@ -6,14 +6,12 @@ process BWA_ALIGN {
     input:
     tuple val(pair_id_val), path(read1), path(read2)
     path(genome)
-    tuple path(amb), path(ann), path(bwt), path(pac), path(sa)
-    path fai
-    path dict 
+    tuple val(meta), path(bwa_index)
     output:
     tuple val(pair_id_val), path("${genome.baseName}_${pair_id_val}.sam"), emit: sam
     script:
     """
-    bwa mem -t ${task.cpus} ${genome} ${read1} ${read2} > ${genome.baseName}_${pair_id_val}.sam
+    bwa mem -t ${task.cpus} ${bwa_index}/${meta} ${read1} ${read2} > ${genome.baseName}_${pair_id_val}.sam
     """
 }
 

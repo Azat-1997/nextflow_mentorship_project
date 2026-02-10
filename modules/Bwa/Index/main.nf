@@ -1,15 +1,12 @@
 process BWA_INDEX {
     container 'staphb/bwa'
     input:
-    path genome_file
+    tuple val(meta), path(genome_file)
     output:
-    tuple path("${genome_file}.amb"), 
-          path("${genome_file}.ann"), 
-          path("${genome_file}.bwt"), 
-          path("${genome_file}.pac"), 
-          path("${genome_file}.sa"), emit: bwa_index
+    tuple val(meta), path("bwa"), emit: bwa_index
     script: 
     """
-    bwa index ${genome_file}
+    mkdir bwa
+    bwa index -p bwa/${genome_file.baseName} ${genome_file}
     """
 }

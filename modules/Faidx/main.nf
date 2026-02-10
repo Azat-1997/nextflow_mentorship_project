@@ -1,11 +1,11 @@
 process FAIDX {
     container 'broadinstitute/gatk'
     input: 
-    path genome_file
+    tuple val(meta), path(genome_file)
     output:
-    path "${genome_file}.fai", emit: faidx
+    tuple val(meta), path("${meta}.fai"), emit: faidx
     script:
     """
-    samtools faidx ${genome_file}
+    samtools faidx ${genome_file} -o ${meta}.fai
     """
 }
