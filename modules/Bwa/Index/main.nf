@@ -1,4 +1,4 @@
-process BWA {
+process BWA_INDEX {
     container 'staphb/bwa'
     input:
     path genome_file

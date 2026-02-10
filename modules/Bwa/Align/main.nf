@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-process ALIGN {
+process BWA_ALIGN {
     tag { pair_id_val }
     container 'quay.io/biocontainers/bwa:0.7.17--he4a0461_11'
     input:
