@@ -3,9 +3,9 @@ process FAIDX {
     input: 
     tuple val(meta), path(genome_file)
     output:
-    tuple val(meta), path("${meta}.fai"), emit: faidx
+    tuple val(meta), path("${genome_file}.fai"), emit: faidx
     script:
     """
-    samtools faidx ${genome_file} -o ${meta}.fai
+    samtools faidx ${genome_file} -o ${genome_file}.fai
     """
 }

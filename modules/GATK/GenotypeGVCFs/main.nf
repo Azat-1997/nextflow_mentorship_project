@@ -3,8 +3,8 @@ process GENOTYPE {
     container 'broadinstitute/gatk'
     input:
     path genome
-    path index
-    path dict
+    tuple val(index_meta), path(index)
+    tuple val(dict_meta), path(dict)
     tuple val(pair_id_val), path(gvcf_index), path(gvcf_file)
     output:
     tuple val(pair_id_val), path("${pair_id_val}.vcf.gz"), path("${pair_id_val}.vcf.gz.tbi"), emit: genotype_gvcf

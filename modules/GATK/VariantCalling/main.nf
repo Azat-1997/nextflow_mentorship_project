@@ -3,8 +3,8 @@ process VARIANTCALLING {
     container 'broadinstitute/gatk'
     input:
     path genome  
-    path index 
-    path dict 
+    tuple val(index_meta), path(index) 
+    tuple val(dict_meta), path(dict) 
     tuple val(pair_id_val), path(bam_index), path(bam_file) 
     output:
     tuple val(pair_id_val), path("${pair_id_val}.g.vcf.gz.tbi"), path("${pair_id_val}.g.vcf.gz"), emit: vcf
