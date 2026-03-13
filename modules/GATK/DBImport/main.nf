@@ -9,5 +9,5 @@ process DBIMPORT {
     """gatk --java-options "-Xmx4g -Xms4g" GenomicsDBImport \
       -V ${gvcf_file} \
       --genomicsdb-workspace-path ${meta.id} \
-      --intervals chrM"""
+      --intervals ${params.chr}"""
 }

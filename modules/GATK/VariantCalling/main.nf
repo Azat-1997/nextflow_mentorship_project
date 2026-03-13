@@ -13,5 +13,5 @@ process VARIANTCALLING {
    -R ${genome} \
    -I ${bam_file} \
    -O '${meta.id}.g.vcf.gz' \
-   -ERC GVCF """
+   -ERC ${params.erc} """
 }
