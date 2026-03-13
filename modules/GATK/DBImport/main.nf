@@ -2,7 +2,7 @@ process DBIMPORT {
     tag { meta.id }
     container 'broadinstitute/gatk'
     input:
-    tuple val(meta), path(gvcf_index), path(gvcf_file) 
+    tuple val(meta), path(gvcf_file), path(gvcf_index) 
     output:
     tuple val(meta), path("${meta.id}"), emit: database
     script:
