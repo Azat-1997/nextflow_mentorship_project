@@ -27,7 +27,7 @@ workflow PREPROCESS {
     rg_bam = ADD_RG(bam_sorted, rglb, rgpl).rg_bam
 
     // prepare output
-    bam_pair = SAMTOOLS_INDEX(rg_bam).rg_bam_pair
+    bam_pair = SAMTOOLS_INDEX(rg_bam).bam_pair
 
     emit:
         bam_pair

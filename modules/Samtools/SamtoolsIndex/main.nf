@@ -4,9 +4,9 @@ process SAMTOOLS_INDEX {
     input:
         tuple val(meta), path(bam)
     output:
-        tuple val(meta), path("${meta.id}.rg.bam"), path("${meta.id}.rg.bai"), emit: rg_bam_pair
+        tuple val(meta), path("${meta.id}.bam"), path("${meta.id}.bai"), emit: bam_pair
     script:
         """
-        samtools index ${bam} ${meta.id}.rg.bai
+        samtools index ${bam} ${meta.id}.bai
         """
 }
