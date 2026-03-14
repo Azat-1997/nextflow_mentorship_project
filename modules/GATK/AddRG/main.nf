@@ -6,7 +6,7 @@ process ADD_RG {
     val  rglb
     val  rgpl
   output:
-    tuple val(meta), path("${meta.id}.rg.bam"), emit: rg_bam
+    tuple val(meta), path("${meta.id}.bam"), emit: rg_bam
   script:
     def rgid = meta.id
     def rgpu = "${meta.id}.PU"
@@ -14,7 +14,7 @@ process ADD_RG {
     """
   gatk AddOrReplaceReadGroups \
       -I "${bam}" \
-      -O "${meta.id}.rg.bam" \
+      -O "${meta.id}.bam" \
       -RGID "${rgid}" \
       -RGLB "${rglb}" \
       -RGPL "${rgpl}" \

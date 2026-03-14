@@ -7,6 +7,6 @@ process SAMTOOLS_CONVERT2BAM {
     tuple val(meta), path("${meta.id}.bam"), emit: bam
     script:
     """
-    samtools view -@ ${task.cpus} -bS ${sam} > ${meta.id}.bam
+    samtools view -@ ${task.cpus} -bS ${sam} -o ${meta.id}.bam
     """
 }
