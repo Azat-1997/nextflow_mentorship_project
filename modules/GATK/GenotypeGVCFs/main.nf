@@ -7,7 +7,7 @@ process GENOTYPE {
     tuple val(dict_meta), path(dict)
     tuple val(meta), path(gvcf_file), path(gvcf_index)
     output:
-    tuple val(meta), path("${meta.id}.vcf.gz"), path("${meta.id}.vcf.gz.tbi"), emit: genotype_gvcf
+    tuple val(meta), path("${meta.id}.vcf.gz"), emit: genotype_gvcf
     script:
     """gatk --java-options "-Xmx4g" GenotypeGVCFs \
    -R ${genome} \

@@ -2,9 +2,10 @@ include { BWA_INDEX } from '../../../modules/Bwa/Index/main.nf'
 include { FAIDX } from '../../../modules/Faidx/main.nf'
 include { PICARD } from '../../../modules/Picard/main.nf'
 include { BWA_ALIGN } from '../../../modules/Bwa/Align/main.nf'
-include { CONVERT2SORTED_BAM } from '../../../modules/Samtools/Convert2SortedBam/main.nf'
-include { ADD_RG } from '../../../modules/RG/AddRG/main.nf'
-include { INDEX_RG_BAM } from '../../../modules/RG/IndexRGBam/main.nf'
+include { SAMTOOLS_CONVERT2BAM } from '../../../modules/Samtools/SamtoolsConvert2Bam/main.nf'
+include { SAMTOOLS_SORT_BAM } from '../../../modules/Samtools/SamtoolsSortBam/main.nf'
+include { SAMTOOLS_INDEX } from '../../../modules/Samtools/SamtoolsIndex/main.nf'
+include { ADD_RG } from '../../../modules/GATK/AddRG/main.nf'
 
 workflow PREPROCESS {
     take:
@@ -18,15 +19,15 @@ workflow PREPROCESS {
     
     // make alignment 
     sam  = BWA_ALIGN(reads, ref_genome, bwa_index).sam
-    bam  = CONVERT2SORTED_BAM(sam)
-
+    bam = SAMTOOLS_CONVERT2BAM(sam)
+    bam_sorted = SAMTOOLS_SORT_BAM(bam)
     // add group for proper work of GATK
     def rglb = params.rglb ?: 'lib1'
     def rgpl = params.rgpl ?: 'ILLUMINA'
-    rg_bam = ADD_RG(bam, rglb, rgpl).rg_bam
+    rg_bam = ADD_RG(bam_sorted, rglb, rgpl).rg_bam
 
     // prepare output
-    bam_pair = INDEX_RG_BAM(rg_bam).rg_bam_pair
+    bam_pair = SAMTOOLS_INDEX(rg_bam).rg_bam_pair
 
     emit:
         bam_pair

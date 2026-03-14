@@ -1,4 +1,4 @@
-process INDEX_RG_BAM {
+process SAMTOOLS_INDEX {
     tag { meta.id }
     container 'broadinstitute/gatk'
     input:
