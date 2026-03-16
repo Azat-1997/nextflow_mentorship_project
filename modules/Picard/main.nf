@@ -8,7 +8,7 @@ process PICARD {
     script:  
     """
     picard CreateSequenceDictionary \
-    R=${genome_file} \
-    O=${meta.id}.dict
+    -R ${genome_file} \
+    -O ${meta.id}.dict
     """
 }

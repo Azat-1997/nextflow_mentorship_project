@@ -11,6 +11,7 @@ process BWA_ALIGN {
     tuple val(meta), path("${genome.baseName}_${meta.id}.sam"), emit: sam
     script:
     """
+    echo ${task.cpus}
     bwa mem -t ${task.cpus} ${bwa_index}/${index_meta.id} ${read1} ${read2} > ${genome.baseName}_${meta.id}.sam
     """
 }
