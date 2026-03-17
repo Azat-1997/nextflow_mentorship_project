@@ -10,18 +10,17 @@ if (params.reads) {
         reads = Channel.fromFilePairs(params.reads, flat: false).map({it -> [['id':it[0]]] + it[1]})
         PREPROCESS(ref_genome_ch, reads)
         bam_pair = PREPROCESS.out.bam_pair
-        faidx = PREPROCESS.out.faidx
-        dict = PREPROCESS.out.dict
-        GATK(params.ref_genome, faidx, dict, bam_pair).genotype_vcf.view({"GENOTYPE VCF: ${it}"})
+        genome_tuple = PREPROCESS.out.genome_tuple
+        GATK(genome_tuple, bam_pair).genotype_vcf.view({"GENOTYPE VCF: ${it}"})
     } else if (params.bam && params.faidx && params.dict) {
         println "Looking for aligned data and indexes"
-        bam_pair = Channel.fromFilePairs(params.bam, flat: true)
-        faidx = Channel.fromPath(params.faidx).first()
-        dict = Channel.fromPath(params.dict).first()
+        bam = Channel.fromPath(params.bam)
+        bai = Channel.fromPath(params.bai)
+        bam_pair = bam.map({file -> ['id': file.baseName]}).merge(bam).merge(bai)
         // faidx and dict should be value channels!!
-        gatk = GATK(params.ref_genome, faidx, dict, bam_pair)
-        gatk.genotype_vcf.view({"GENOTYPE VCF: ${it}"})
-        gatk.database.view({"DATABASE: ${it}"})
+        genome_tuple = tuple(['id': genome_path.baseName], params.ref_genome,
+         params.faidx, params.dict)
+        gatk = GATK(genome_tuple, bam_pair)
     } else {
         println "Data are absence: specify Reads or Bam files"
     }

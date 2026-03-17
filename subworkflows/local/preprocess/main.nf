@@ -31,7 +31,6 @@ workflow PREPROCESS {
 
     emit:
         bam_pair
-        faidx
-        dict
+        genome_tuple = ref_genome | join(faidx) | join(dict) | first
 
 }

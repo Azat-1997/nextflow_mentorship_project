@@ -4,15 +4,13 @@ include { GENOTYPE } from '../../../modules/GATK/GenotypeGVCFs/main.nf'
 
 workflow GATK {
     take:
-    ref_genome
-    faidx 
-    dict 
+    genome_tuple
     bam_pair
 
     main: 
-    vcf = VARIANTCALLING(ref_genome, faidx, dict, bam_pair).vcf
+    vcf = VARIANTCALLING(genome_tuple, bam_pair).vcf
     database = DBIMPORT(vcf)
-    genotype_vcf = GENOTYPE(ref_genome, faidx, dict, vcf)
+    genotype_vcf = GENOTYPE(genome_tuple, vcf)
 
     emit:
     genotype_vcf
