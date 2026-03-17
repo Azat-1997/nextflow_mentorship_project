@@ -1,7 +1,7 @@
 include { BWA_INDEX } from '../../../modules/Bwa/Index/main.nf'
-include { FAIDX } from '../../../modules/Faidx/main.nf'
 include { PICARD } from '../../../modules/Picard/main.nf'
 include { BWA_ALIGN } from '../../../modules/Bwa/Align/main.nf'
+include { FAIDX } from '../../../modules/Samtools/Faidx/main.nf'
 include { SAMTOOLS_CONVERT2BAM } from '../../../modules/Samtools/SamtoolsConvert2Bam/main.nf'
 include { SAMTOOLS_SORT_BAM } from '../../../modules/Samtools/SamtoolsSortBam/main.nf'
 include { SAMTOOLS_INDEX } from '../../../modules/Samtools/SamtoolsIndex/main.nf'

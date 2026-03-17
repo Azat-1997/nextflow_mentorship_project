@@ -6,10 +6,12 @@ workflow GATK {
     take:
     genome_tuple
     bam_pair
+    erc
+    interval
 
     main: 
-    vcf = VARIANTCALLING(genome_tuple, bam_pair).vcf
-    database = DBIMPORT(vcf)
+    vcf = VARIANTCALLING(genome_tuple, bam_pair, erc).vcf
+    database = DBIMPORT(vcf, interval)
     genotype_vcf = GENOTYPE(genome_tuple, vcf)
 
     emit:

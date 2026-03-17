@@ -11,7 +11,7 @@ if (params.reads) {
         PREPROCESS(ref_genome_ch, reads)
         bam_pair = PREPROCESS.out.bam_pair
         genome_tuple = PREPROCESS.out.genome_tuple
-        GATK(genome_tuple, bam_pair).genotype_vcf.view({"GENOTYPE VCF: ${it}"})
+        GATK(genome_tuple, bam_pair,  params.erc, params.chr)
     } else if (params.bam && params.faidx && params.dict) {
         println "Looking for aligned data and indexes"
         bam = Channel.fromPath(params.bam)
@@ -20,7 +20,7 @@ if (params.reads) {
         // faidx and dict should be value channels!!
         genome_tuple = tuple(['id': genome_path.baseName], params.ref_genome,
          params.faidx, params.dict)
-        gatk = GATK(genome_tuple, bam_pair)
+        gatk = GATK(genome_tuple, bam_pair, params.erc, params.chr)
     } else {
         println "Data are absence: specify Reads or Bam files"
     }
