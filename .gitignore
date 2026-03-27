@@ -1,0 +1,16 @@
+.aws/
+.nextflow.log
+.nextflow.log.*
+.nextflow/
+BAM/
+GATK_DATABASE/
+GATK_GENOTYPE/
+Indexes/
+TODO.txt
+archive/
+error.txt
+genomes/
+keys/
+paths.txt
+reads/
+work/
